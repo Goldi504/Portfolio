@@ -101,12 +101,6 @@
 
 const nodemailer = require("nodemailer");
 
-// Check required environment variables
-if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) {
-  console.error("❌ EMAIL_USER or EMAIL_PASSWORD is missing");
-}
-
-// Create Gmail transporter
 const transporter = nodemailer.createTransport({
   service: "gmail",
 
@@ -114,151 +108,43 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASSWORD,
   },
-
-  // Prevent the request from staying stuck forever
-  connectionTimeout: 10000,
-  greetingTimeout: 10000,
-  socketTimeout: 10000,
 });
 
-// Verify Gmail connection when server starts
-transporter.verify((error, success) => {
-  if (error) {
-    console.error("❌ Gmail connection failed:");
-    console.error(error);
-  } else {
-    console.log("✅ Gmail SMTP connection is ready");
-  }
-});
-
-// Send contact email
 const sendContactEmail = async ({
   name,
   email,
   subject,
   message,
 }) => {
-  try {
-    const mailOptions = {
-      // Your Gmail account
-      from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: process.env.EMAIL_USER,
+    replyTo: email,
 
-      // Your Gmail account receives the message
-      to: process.env.EMAIL_USER,
+    subject: subject
+      ? `Portfolio Contact: ${subject}`
+      : `New Portfolio Contact from ${name}`,
 
-      // When you click Reply, it replies to the visitor
-      replyTo: email,
+    html: `
+      <h2>New Portfolio Message</h2>
 
-      subject: subject
-        ? `Portfolio Contact: ${subject}`
-        : `New Portfolio Contact from ${name}`,
+      <p><strong>Name:</strong> ${name}</p>
 
-      html: `
-        <!DOCTYPE html>
-        <html>
-          <head>
-            <meta charset="UTF-8" />
-            <title>Portfolio Contact</title>
-          </head>
+      <p><strong>Email:</strong> ${email}</p>
 
-          <body style="
-            margin: 0;
-            padding: 20px;
-            background-color: #f4f4f4;
-            font-family: Arial, Helvetica, sans-serif;
-          ">
+      <p><strong>Subject:</strong> ${subject || "No subject"}</p>
 
-            <div style="
-              max-width: 600px;
-              margin: 0 auto;
-              background-color: #ffffff;
-              border-radius: 12px;
-              overflow: hidden;
-              box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            ">
+      <hr />
 
-              <div style="
-                background-color: #164b36;
-                padding: 25px;
-                text-align: center;
-              ">
-                <h2 style="
-                  margin: 0;
-                  color: #ffffff;
-                ">
-                  New Portfolio Message
-                </h2>
-              </div>
+      <p><strong>Message:</strong></p>
 
-              <div style="padding: 30px;">
+      <p>${message}</p>
+    `,
+  };
 
-                <p>
-                  <strong>Name:</strong>
-                  ${name}
-                </p>
+  const info = await transporter.sendMail(mailOptions);
 
-                <p>
-                  <strong>Email:</strong>
-                  ${email}
-                </p>
-
-                <p>
-                  <strong>Subject:</strong>
-                  ${subject || "No subject"}
-                </p>
-
-                <hr style="
-                  border: none;
-                  border-top: 1px solid #eeeeee;
-                  margin: 25px 0;
-                " />
-
-                <p>
-                  <strong>Message:</strong>
-                </p>
-
-                <div style="
-                  background-color: #f9f9f9;
-                  padding: 15px;
-                  border-radius: 8px;
-                  line-height: 1.6;
-                  color: #333333;
-                ">
-                  ${message}
-                </div>
-
-              </div>
-
-              <div style="
-                padding: 20px 30px;
-                background-color: #f8f8f8;
-                color: #777777;
-                font-size: 13px;
-              ">
-                This message was sent from your portfolio contact form.
-              </div>
-
-            </div>
-
-          </body>
-        </html>
-      `,
-    };
-
-    console.log("📧 Sending portfolio contact email...");
-
-    const info = await transporter.sendMail(mailOptions);
-
-    console.log("✅ Email sent successfully");
-    console.log("Message ID:", info.messageId);
-
-    return info;
-  } catch (error) {
-    console.error("❌ Email sending failed:");
-    console.error(error);
-
-    throw error;
-  }
+  return info;
 };
 
 module.exports = {
