@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Menu, X, Github } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Download } from "lucide-react";
+import resumePDF from "../assets/resume.pdf";
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -65,7 +66,7 @@ const Navbar = () => {
           </a>
 
           <a
-            href="/resume.pdf"
+            href={resumePDF}
             download="Goldi-Kumari-Resume.pdf"
             className="
     hidden
@@ -106,15 +107,15 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {/* <AnimatePresence> */}
-{/* Mobile menu */}
-<AnimatePresence>
-  {mobileOpen && (
-    <motion.div
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.2 }}
-      className="
+      {/* Mobile menu */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="
         mt-3
         rounded-2xl
         border border-white/10
@@ -123,88 +124,88 @@ const Navbar = () => {
         shadow-2xl
         md:hidden
       "
-    >
-      {/* ABOUT */}
-      <a
-        href="#about"
-        onClick={closeMobile}
-        className="
+          >
+            {/* ABOUT */}
+            <a
+              href="#about"
+              onClick={closeMobile}
+              className="
           flex w-full items-center justify-between
           rounded-xl px-4 py-3
           text-left text-sm text-slate-300
           transition hover:bg-white/5 hover:text-white
         "
-      >
-        <span>About</span>
-        <span className="text-xs text-slate-600">↗</span>
-      </a>
+            >
+              <span>About</span>
+              <span className="text-xs text-slate-600">↗</span>
+            </a>
 
-      {/* SKILLS */}
-      <a
-        href="#skills"
-        onClick={closeMobile}
-        className="
+            {/* SKILLS */}
+            <a
+              href="#skills"
+              onClick={closeMobile}
+              className="
           flex w-full items-center justify-between
           rounded-xl px-4 py-3
           text-left text-sm text-slate-300
           transition hover:bg-white/5 hover:text-white
         "
-      >
-        <span>Skills</span>
-        <span className="text-xs text-slate-600">↗</span>
-      </a>
+            >
+              <span>Skills</span>
+              <span className="text-xs text-slate-600">↗</span>
+            </a>
 
-      {/* PROJECTS */}
-      <a
-        href="#projects"
-        onClick={closeMobile}
-        className="
+            {/* PROJECTS */}
+            <a
+              href="#projects"
+              onClick={closeMobile}
+              className="
           flex w-full items-center justify-between
           rounded-xl px-4 py-3
           text-left text-sm text-slate-300
           transition hover:bg-white/5 hover:text-white
         "
-      >
-        <span>Projects</span>
-        <span className="text-xs text-slate-600">↗</span>
-      </a>
+            >
+              <span>Projects</span>
+              <span className="text-xs text-slate-600">↗</span>
+            </a>
 
-      {/* GITHUB */}
-      <a
-        href="#github"
-        onClick={closeMobile}
-        className="
+            {/* GITHUB */}
+            <a
+              href="#github"
+              onClick={closeMobile}
+              className="
           flex w-full items-center justify-between
           rounded-xl px-4 py-3
           text-left text-sm text-slate-300
           transition hover:bg-white/5 hover:text-white
         "
-      >
-        <span>GitHub</span>
-        <span className="text-xs text-slate-600">↗</span>
-      </a>
+            >
+              <span>GitHub</span>
+              <span className="text-xs text-slate-600">↗</span>
+            </a>
 
-      {/* CONTACT */}
-      <a
-        href="#contact"
-        onClick={closeMobile}
-        className="
+            {/* CONTACT */}
+            <a
+              href="#contact"
+              onClick={closeMobile}
+              className="
           flex w-full items-center justify-between
           rounded-xl px-4 py-3
           text-left text-sm text-slate-300
           transition hover:bg-white/5 hover:text-white
         "
-      >
-        <span>Contact</span>
-        <span className="text-xs text-slate-600">↗</span>
-      </a>
+            >
+              <span>Contact</span>
+              <span className="text-xs text-slate-600">↗</span>
+            </a>
 
-      {/* RESUME */}
-      <a
-        href="/resume.pdf"
-        download="Goldi-Kumari-Resume.pdf"
-        onClick={closeMobile}
-        className="
+            {/* RESUME */}
+           <a
+  href={resumePDF}
+  download="Goldi-Kumari-Resume.pdf"
+              onClick={closeMobile}
+              className="
           mt-1
           flex w-full items-center justify-between
           rounded-xl
@@ -216,13 +217,13 @@ const Navbar = () => {
           transition
           hover:bg-indigo-500/20
         "
-      >
-        <span>Resume</span>
-        <Download size={16} />
-      </a>
-    </motion.div>
-  )}
-</AnimatePresence>
+            >
+              <span>Resume</span>
+              <Download size={16} />
+            </a>
+          </motion.div>
+        )}
+      </AnimatePresence>
       {/* </AnimatePresence> */}
     </header>
   );
