@@ -27,6 +27,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
+      "https://portfolio-five-ruby-11.vercel.app",
       "https://portfolio-goldi.vercel.app",
     ],
     credentials: true,
