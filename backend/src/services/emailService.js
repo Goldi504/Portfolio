@@ -174,7 +174,8 @@ const sendContactEmail = async ({
     console.log("📧 Sending portfolio contact email...");
 
     const { data, error } = await resend.emails.send({
-      from: "Portfolio <onboarding@resend.dev>",
+      // from: "Portfolio <onboarding@resend.dev>",
+      from: "Goldi Portfolio <contact@goldikumari.com>",
 
       // Your Gmail address
       to: [process.env.EMAIL_USER],
